@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 AI Readiness Assessment Tool
 
-## Getting Started
+**Bridging the gap between AI hype and operational reality.**
 
-First, run the development server:
+### 🎯 The "Why"
+As an **IT Project Manager**, I see companies falling into the same trap: they automate chaos and wonder why they get high-speed chaos. This tool is built to pay off **Management Debt**. It helps businesses transition from **"Pirate Mode"** (adhoc heroism) to **"Builder Mode"** (scalable infrastructure) by providing a structured 3-minute readiness roadmap.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 🛠 Technical Architecture
+I managed the full delivery cycle of this MVP to demonstrate a modern, scalable stack:
+- **Framework:** [Next.js](https://nextjs.org/) (App Router)
+- **Intelligence:** [Google Gemini 3 Flash](https://deepmind.google/technologies/gemini/) (Prompt Engineering & Logic)
+- **Backend/DB:** [Supabase](https://supabase.com/) (PostgreSQL)
+- **Delivery:** [jsPDF](https://rawgit.com/MrRio/jsPDF/master/docs/index.html) for automated, technical SOP generation.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### ✨ PM Value & Features
+- **Project Discovery:** Automated identification of high-ROI automation areas to avoid "efficiency debt."
+- **Compliance & Risk:** Built-in flagging for Canadian (**PIPEDA/AIDA**) and US regulatory alignment—ensuring projects don't stall at the legal phase.
+- **SOP Generation:** Turns vague goals into a repeatable, documented system on "rails."
+- **Stakeholder Ready:** Instant PDF reports designed for executive-level decision-making.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🛡 Security First
+- **Secrets Management:** Fully protected API keys (configured via `.gitignore` and Vercel encryption).
+- **Data Integrity:** Implemented RLS (Row Level Security) via Supabase to ensure data isolation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+### 👩‍💼 About Me
+I am an **IT Project Manager** based in Canada (Open Work Permit). 
 
-To learn more about Next.js, take a look at the following resources:
+I specialize in paying off "Management Debt" by replacing late-night heroism with predictable systems. My focus is on technical delivery where AI meets operations—ensuring that technology solves business problems instead of creating new ones.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+🔗 **Let's Connect:** [linkedin.com/in/pminnaka](https://www.linkedin.com/in/pminnaka/)  
+🇨🇦 **Location:** Canada (Open Work Permit holder)  
+🚀 **Goal:** Delivering high-impact IT projects with a focus on AI implementation and operational excellence.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*PM Inna Kashtanova | 2026*
