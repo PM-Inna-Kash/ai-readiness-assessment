@@ -2,9 +2,10 @@
 import { useState } from 'react'
 import { supabase } from './lib/supabase'
 import { questions } from './lib/questions'
+import ReactMarkdown from 'react-markdown'
 
 export default function Home() {
-  const [step, setStep] = useState(0) // 0: Onboarding, 1: Form, 2: Role, 3: Quiz, 4: Result
+  const [step, setStep] = useState(0) // 0: Pilot Onboarding, 1: Form, 2: Role, 3: Quiz, 4: Result
   const [role, setRole] = useState<string | null>(null)
   const [currentQ, setCurrentQ] = useState(0)
   const [answers, setAnswers] = useState<string[]>([])
@@ -21,6 +22,11 @@ export default function Home() {
     { id: 'lead', title: 'Team Lead / Project Manager' },
   ]
 
+  // Validation: Check if all required fields are filled to enable progress
+  const isFormValid = bizInfo.name.trim() !== '' && 
+                      bizInfo.email.trim() !== '' && 
+                      bizInfo.companyName.trim() !== '';
+
   const handleAnswer = async (answer: string) => {
     const newAnswers = [...answers, answer]
     const roleQs = questions[role as keyof typeof questions]
@@ -30,7 +36,8 @@ export default function Home() {
       setCurrentQ(currentQ + 1)
     } else {
       setStep(4); setLoading(true)
-      // Save leads to Supabase for business analysis
+      
+      // Save leads to Supabase for business logic tracking
       await supabase.from('assessments').insert([{ 
         role, answers: newAnswers, email: bizInfo.email, company_name: bizInfo.companyName 
       }])
@@ -43,7 +50,7 @@ export default function Home() {
         const data = await res.json()
         setAiResult(data.result || data.error)
       } catch (e) {
-        setAiResult("Service temporarily busy. Please try again in 30 seconds.")
+        setAiResult("The AI service is currently busy. Please wait 30 seconds and try again.")
       } finally {
         setLoading(false)
       }
@@ -66,44 +73,64 @@ export default function Home() {
       {/* 2. MAIN TOOL INTERFACE */}
       <div className="max-w-xl w-full bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 mb-16">
         
+        {/* Step 0: Pilot Onboarding & Privacy Disclosure */}
         {step === 0 && (
-          <div className="text-center">
-            <div className="text-5xl mb-6">🎯</div>
-            <h2 className="text-2xl font-bold mb-4">Start Your Strategy</h2>
-            <p className="text-gray-500 mb-8">Identify automation opportunities and ROI-driven AI tools for your team.</p>
+          <div className="text-left">
+            <div className="text-5xl mb-6 text-center">🎯</div>
+            <h2 className="text-2xl font-bold mb-4 text-center">Pilot Environment & MVP</h2>
+            <div className="space-y-4 text-gray-600 text-sm mb-8 leading-relaxed">
+              <p>Welcome! This is a <strong>technical pilot</strong> built to demonstrate AI automation and project management expertise.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><strong>Real Insights:</strong> Use real data to get a genuine AI strategy.</li>
+                <li><strong>Test Mode:</strong> Feel free to use <code>test@test.com</code> to explore the UI logic.</li>
+                <li><strong>Mandatory:</strong> All fields are required to give the AI proper context.</li>
+              </ul>
+              <p className="bg-blue-50 p-3 rounded-lg border border-blue-100 text-blue-800">
+                <strong>Pro Tip:</strong> Enter your real email to see how automated reporting looks!
+              </p>
+            </div>
             <button onClick={() => setStep(1)} className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-              Get Started
+              Start Assessment
             </button>
+            <p className="mt-4 text-[10px] text-gray-400 text-center uppercase tracking-widest italic leading-tight">
+              🔒 Data privacy: All inputs are stored securely in Supabase for demo purposes.
+            </p>
           </div>
         )}
 
+        {/* Step 1: Lead Information Form */}
         {step === 1 && (
           <div className="space-y-4">
             <h2 className="text-xl font-bold mb-6 text-center">Business Context</h2>
-            <input type="text" placeholder="Your Name" className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, name: e.target.value})} />
-            <input type="email" placeholder="Business Email" className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, email: e.target.value})} />
-            <input type="text" placeholder="Company Name" className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, companyName: e.target.value})} />
+            <input type="text" placeholder="Full Name *" required className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, name: e.target.value})} />
+            <input type="email" placeholder="Business Email *" required className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, email: e.target.value})} />
+            <input type="text" placeholder="Company Name *" required className="w-full p-4 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-blue-500" onChange={e => setBizInfo({...bizInfo, companyName: e.target.value})} />
             <div className="flex gap-2">
-                <select className="flex-1 p-4 bg-gray-50 border-none rounded-xl" onChange={e => setBizInfo({...bizInfo, companySize: e.target.value})}>
-                <option>1-10 staff</option>
-                <option>11-50 staff</option>
-                <option>50+ staff</option>
+                <select className="flex-1 p-4 bg-gray-50 border-none rounded-xl text-sm" onChange={e => setBizInfo({...bizInfo, companySize: e.target.value})}>
+                    <option>1-10 employees</option>
+                    <option>11-50 employees</option>
+                    <option>50+ employees</option>
                 </select>
-                <select className="flex-1 p-4 bg-gray-50 border-none rounded-xl" onChange={e => setBizInfo({...bizInfo, market: e.target.value})}>
-                <option>Canada</option>
-                <option>USA</option>
-                <option>Global</option>
+                <select className="flex-1 p-4 bg-gray-50 border-none rounded-xl text-sm" onChange={e => setBizInfo({...bizInfo, market: e.target.value})}>
+                    <option>Canada</option>
+                    <option>USA</option>
+                    <option>Global</option>
                 </select>
             </div>
-            <button onClick={() => setStep(2)} disabled={!bizInfo.email || !bizInfo.companyName} className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black disabled:bg-gray-200 transition-all mt-4">
+            <button 
+                onClick={() => setStep(2)} 
+                disabled={!isFormValid} 
+                className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black disabled:bg-gray-200 transition-all mt-4"
+            >
               Next Step
             </button>
           </div>
         )}
 
+        {/* Step 2: Role Selection */}
         {step === 2 && (
           <div className="space-y-4 text-center">
-            <h2 className="text-xl font-bold mb-6">Select Your Primary Focus</h2>
+            <h2 className="text-xl font-bold mb-6">Your Professional Role</h2>
             {roles.map(r => (
               <button key={r.id} onClick={() => {setRole(r.id); setStep(3)}} className="w-full p-5 border-2 border-gray-100 rounded-2xl hover:border-blue-500 hover:bg-blue-50 transition-all text-left font-semibold">
                 {r.title}
@@ -112,6 +139,7 @@ export default function Home() {
           </div>
         )}
 
+        {/* Step 3: Question Assessment Cycle */}
         {step === 3 && role && (
           <div>
             <div className="flex justify-between items-center mb-6">
@@ -131,20 +159,37 @@ export default function Home() {
           </div>
         )}
 
+        {/* Step 4: AI Strategy Result & Call to Action */}
         {step === 4 && (
           <div className="text-center">
-            <h2 className="text-2xl font-black mb-6">AI Strategy for {bizInfo.companyName}</h2>
+            <h2 className="text-2xl font-black mb-6 uppercase tracking-tight text-gray-900">AI Strategy for {bizInfo.companyName}</h2>
             {loading ? (
               <div className="flex flex-col items-center py-12">
                 <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full mb-4"></div>
-                <p className="text-gray-500 font-medium">Analyzing data with Gemini 3...</p>
+                <p className="text-gray-500 font-medium italic">Gemini 3 is crafting your roadmap...</p>
               </div>
             ) : (
-              <div className="text-left bg-blue-50 p-6 rounded-2xl whitespace-pre-wrap border border-blue-100 text-gray-800 leading-relaxed font-medium">
-                {aiResult}
+              <div className="text-left bg-blue-50 p-6 rounded-2xl border border-blue-100 text-gray-800 leading-relaxed font-medium mb-8">
+                <article className="prose prose-sm prose-blue max-w-none">
+                  <ReactMarkdown>{aiResult}</ReactMarkdown>
+                </article>
               </div>
             )}
-            <button onClick={() => window.location.reload()} className="mt-10 text-sm font-bold text-gray-400 hover:text-blue-600 transition-colors uppercase tracking-widest">
+            
+            {/* Call to Actions (CTAs) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+              <a href="https://github.com/PM-Inna-Kash/ai-readiness-assessment" target="_blank" className="flex items-center justify-center p-3 bg-gray-100 rounded-xl font-bold text-[10px] hover:bg-gray-200 transition-all uppercase tracking-widest">
+                📂 GitHub Code
+              </a>
+              <a href="https://www.linkedin.com/in/pminnaka/" target="_blank" className="flex items-center justify-center p-3 bg-blue-600 text-white rounded-xl font-bold text-[10px] hover:bg-blue-700 transition-all uppercase tracking-widest">
+                🤝 LinkedIn Profile
+              </a>
+              <a href="mailto:pm.inna.kash@gmail.com?subject=Interview Invitation" className="md:col-span-2 flex items-center justify-center p-3 bg-black text-white rounded-xl font-bold text-[10px] hover:opacity-90 transition-all uppercase tracking-widest">
+                ☕ Invite for an Interview
+              </a>
+            </div>
+
+            <button onClick={() => window.location.reload()} className="text-[10px] font-black text-gray-400 hover:text-blue-600 transition-colors uppercase tracking-widest">
               Restart Assessment
             </button>
           </div>
@@ -159,23 +204,23 @@ export default function Home() {
           </div>
           <div className="text-center md:text-left">
             <h3 className="text-xl font-bold">Inna Kashtanova</h3>
-            <p className="text-blue-600 font-bold text-sm mb-3">Product Manager & AI Implementation Expert</p>
+            <p className="text-blue-600 font-bold text-sm mb-3 uppercase tracking-widest">Product Manager & AI Specialist</p>
             <p className="text-gray-500 text-sm leading-relaxed mb-4">
-              Specializing in bridging the gap between business goals and AI technologies. Focused on ROI-driven automation for the Canadian market.
+              Building practical AI solutions that bridge business vision and technical execution. Focused on high-ROI automation for global markets.
             </p>
             <div className="flex justify-center md:justify-start gap-4">
-                <a href="https://www.linkedin.com/in/pminnaka/" target="_blank" className="text-sm font-black text-gray-900 hover:text-blue-600 transition-colors">
-                  LINKEDIN →
+                <a href="https://www.linkedin.com/in/pminnaka/" target="_blank" className="text-xs font-black text-gray-900 hover:text-blue-600 transition-colors tracking-widest uppercase underline decoration-2 decoration-blue-100">
+                  LINKEDIN
                 </a>
-                <a href="mailto:pm.inna.kash@gmail.com" className="text-sm font-black text-gray-900 hover:text-blue-600 transition-colors">
-                  EMAIL →
+                <a href="mailto:pm.inna.kash@gmail.com" className="text-xs font-black text-gray-900 hover:text-blue-600 transition-colors tracking-widest uppercase underline decoration-2 decoration-blue-100">
+                  EMAIL
                 </a>
             </div>
           </div>
         </div>
       </div>
 
-      <footer className="mt-12 text-gray-400 text-xs font-medium uppercase tracking-widest">
+      <footer className="mt-12 text-gray-400 text-[10px] font-medium uppercase tracking-[0.2em]">
         Built with Gemini 3 & Next.js © 2026
       </footer>
     </main>
