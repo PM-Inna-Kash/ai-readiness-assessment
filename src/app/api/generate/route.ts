@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Resend } from 'resend';
 
-// Initializing Resend for lead notifications
-const resend = new Resend(process.env.RESEND_API_KEY);
+// This ensures the build doesn't crash if the environment variable is missing
+const resend = new Resend(process.env.RESEND_API_KEY || 're_123');
 
 // Initializing Google Generative AI with the provided API key
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY!);
