@@ -305,7 +305,7 @@ export default function Home() {
             )}
           </div>
         )}
-      </div> {}
+      </div>
 
       {/* Expert Profile Footer Section */}
       <div className="max-w-xl w-full bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
