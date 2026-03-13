@@ -221,69 +221,91 @@ export default function Home() {
           </div>
         )}
 
-        {/* Step 3: Questions */}
-        {step === 3 && role && (
-          <div className="text-left">
-            <div className="text-4xl mb-4 text-center">{activeQuestions[currentQ].icon}</div>
-            <h2 className="text-xl font-bold mb-1">{activeQuestions[currentQ].text}</h2>
-            <p className="text-gray-500 text-sm mb-8 leading-relaxed">{activeQuestions[currentQ].hint}</p>
-            <div className="space-y-3">
-              {activeQuestions[currentQ].options.map(opt => (
-                <button key={opt} onClick={() => handleAnswer(opt)} className="w-full p-4 bg-gray-50 rounded-2xl hover:bg-blue-600 hover:text-white transition-all text-left font-medium border border-transparent">{opt}</button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Step 3: Assessment Questions */}
+{step === 3 && role && (
+  <div className="text-left">
+    {/* Progress Header */}
+    <div className="flex justify-between items-center mb-6">
+        <span className="text-xs font-black uppercase text-blue-600">
+          Question {currentQ + 1} / {totalQuestions}
+        </span>
+        <div className="h-1.5 w-24 bg-gray-100 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-blue-600 transition-all duration-300" 
+              style={{ width: `${((currentQ + 1) / totalQuestions) * 100}%` }}
+            ></div>
+        </div>
+    </div>
+
+    {/* Question Header - Corrected to use activeQuestions */}
+    <div className="text-4xl mb-4 text-center">{activeQuestions[currentQ].icon}</div>
+    <h2 className="text-xl font-bold mb-1">{activeQuestions[currentQ].text}</h2>
+    <p className="text-gray-500 text-sm mb-8 leading-relaxed">
+      {activeQuestions[currentQ].hint}
+    </p>
+
+    {/* Options Grid */}
+    <div className="space-y-3">
+      {activeQuestions[currentQ].options.map(opt => (
+        <button 
+          key={opt} 
+          onClick={() => handleAnswer(opt)} 
+          className="w-full p-4 bg-gray-50 rounded-2xl hover:bg-blue-600 hover:text-white transition-all text-left font-medium border border-transparent"
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
         
-        {/* Step 4: Comment Field */}
+       {/* Step 4: Final Qualitative Input */}
         {step === 4 && (
           <div className="space-y-6">
             <h2 className="text-xl font-bold mb-4 text-center">Final Context</h2>
-            <p className="text-gray-500 text-sm mb-4 leading-relaxed text-center">Provide any additional pain points or specific objectives.</p>
+            <p className="text-gray-500 text-sm mb-4 leading-relaxed text-center">
+              Provide any additional pain points or specific objectives (e.g., budget, timeline).
+            </p>
             <textarea 
-              className="w-full p-4 bg-gray-50 rounded-xl outline-none min-h-[150px] text-sm focus:ring-2 focus:ring-blue-500"
-              placeholder="Example: We have a $500 monthly budget and need to automate staff scheduling."
+              className="w-full p-4 bg-gray-50 border-none rounded-xl outline-none min-h-[150px] text-sm focus:ring-2 focus:ring-blue-500"
+              placeholder="Example: We have a $500 monthly budget and need to automate our staff scheduling."
               value={userComment}
               onChange={(e) => setUserComment(e.target.value)}
             />
             <button 
               onClick={generateAudit} 
-              className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-700 shadow-xl"
+              className="w-full py-5 bg-blue-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-700 shadow-xl shadow-blue-100 transition-all active:scale-[0.98]"
             >
               Generate Strategic Audit
             </button>
           </div>
         )}
 
-        {/* Step 5: Results */}
+        {/* Step 5: Results UI */}
         {step === 5 && (
-          <div className="w-full">
+          <div className="text-left bg-white">
             {loading ? (
-              <div className="flex flex-col items-center py-20 bg-white">
-                <div className="animate-spin h-12 w-12 border-4 border-blue-600 border-t-transparent rounded-full mb-8"></div>
-                <p className="text-gray-400 font-medium italic animate-pulse text-[10px] uppercase tracking-widest text-center">Architecting Strategy...</p>
+              <div className="flex flex-col items-center py-12">
+                <div className="animate-spin h-10 w-10 border-4 border-blue-600 border-t-transparent rounded-full mb-6"></div>
+                <p className="text-gray-500 font-medium italic animate-pulse tracking-tighter uppercase text-[10px]">Architecting Strategy...</p>
               </div>
             ) : (
-              <div className="text-left bg-white leading-relaxed">
-                <div className="mb-16 border-b-2 border-blue-50 pb-12 text-center">
-                  <h2 className="text-4xl font-black uppercase tracking-tighter text-gray-900 mb-2">{bizInfo.companyName}</h2>
-                  <p className="text-[10px] text-blue-600 font-bold uppercase tracking-[0.3em]">Confidential Strategic Audit</p>
-                </div>
+              <div className="animate-in fade-in duration-1000">
                 <article className="prose prose-blue max-w-none prose-p:mb-8 prose-p:leading-relaxed prose-headings:text-blue-900 prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tighter prose-strong:text-blue-600">
                   <ReactMarkdown>{aiResult}</ReactMarkdown>
                 </article>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-16">
-                  <button onClick={downloadPDF} className="md:col-span-2 py-5 bg-blue-600 text-white rounded-2xl font-black text-sm tracking-widest hover:bg-blue-700 shadow-xl uppercase">Download PDF Audit</button>
-                  <a href="https://www.linkedin.com/in/pminnaka/" target="_blank" className="flex items-center justify-center p-4 bg-gray-50 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-gray-100 transition-colors">Connect on LinkedIn</a>
-                  <a href="mailto:pm.inna.kash@gmail.com" className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-black transition-colors">Book Consultation</a>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-16 pt-12 border-t border-gray-100">
+                  <button onClick={downloadPDF} className="md:col-span-2 py-5 bg-blue-600 text-white rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-blue-700 transition-all shadow-xl">Download PDF Audit</button>
+                  <a href="https://www.linkedin.com/in/pminnaka/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center p-4 bg-gray-50 rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-gray-100 transition-colors">Connect on LinkedIn</a>
+                  <a href="mailto:pm.inna.kash@gmail.com" className="flex items-center justify-center p-4 bg-gray-900 text-white rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-black transition-colors">Book a Consultation</a>
                 </div>
                 <button onClick={() => window.location.reload()} className="w-full mt-12 text-[10px] font-black text-gray-300 hover:text-blue-600 uppercase tracking-widest transition-colors">Restart Assessment</button>
               </div>
             )}
           </div>
         )}
-      </div>
+      </div> {}
 
       {/* Expert Profile Footer Section */}
       <div className="max-w-xl w-full bg-white p-8 rounded-3xl shadow-lg border border-gray-100">
