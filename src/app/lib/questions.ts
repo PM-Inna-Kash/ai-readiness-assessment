@@ -1,23 +1,109 @@
-export const questions = {
+// src/app/lib/questions.ts
+
+export type Option = string;
+
+export interface Question {
+  id: string;
+  icon: string;
+  text: string;
+  hint: string; // Micro-hint for cognitive load reduction
+  options: Option[];
+}
+
+export const commonQuestions: Question[] = [
+  {
+    id: 'stack',
+    icon: '🧱',
+    text: 'Main IT Stack',
+    hint: 'Primary business communication and collaboration hub',
+    options: ['Slack / MS Teams / Email', 'Salesforce / HubSpot', 'Legacy Systems', 'No specific tools']
+  },
+  {
+    id: 'data_foundation',
+    icon: '💾',
+    text: 'Data Foundation',
+    hint: 'How structured and accessible is your business data?',
+    options: ['No data tracked', 'Fragmented (Spreadsheets/Chats)', 'Structured (Databases/Tables)', 'Advanced (Data Lake/BI)']
+  },
+  {
+    id: 'data_volume',
+    icon: '📊',
+    text: 'Data Volume',
+    hint: 'Estimated number of records (leads, orders, or tickets)',
+    options: ['Hundreds (Small)', 'Thousands (Medium)', 'Millions (Big Data)', 'Unknown']
+  },
+  {
+    id: 'budget',
+    icon: '💸',
+    text: 'AI Budget',
+    hint: 'Monthly budget for new AI tools and automation',
+    options: ['Minimal ($0-$100)', 'Mid-range ($100-$500)', 'Enterprise ($500+)', 'Not defined']
+  }
+];
+
+export const roleQuestions: Record<string, Question[]> = {
   owner: [
-    { id: 1, text: "What is your primary business goal for AI?", options: ["Revenue growth", "Operational efficiency", "Customer experience"] },
-    { id: 2, text: "How much of your data is structured (in databases/tables)?", options: ["Most of it", "Some of it", "Almost none"] },
-    { id: 3, text: "Do you have a budget for AI tools/subscriptions?", options: ["Yes, >$500/mo", "Small budget", "No budget yet"] },
-    { id: 4, text: "What is the biggest bottleneck?", options: ["Manual reporting", "Sales outreach", "Content creation"] },
-    { id: 5, text: "Is your team ready for AI change?", options: ["Excited", "Hesitant", "Resistant"] },
+    {
+      id: 'owner_pain',
+      icon: '🚀',
+      text: 'Growth Barrier',
+      hint: 'What is the main bottleneck for scaling your operations?',
+      options: ['Human Factor/Errors', 'Slow Processes', 'Lack of Analytics']
+    },
+    {
+      id: 'owner_goal',
+      icon: '🎯',
+      text: 'Primary Focus',
+      hint: 'What is your key business KPI for this year?',
+      options: ['Revenue Growth', 'Cost Reduction', 'Product Quality']
+    }
   ],
   hr: [
-    { id: 1, text: "Primary pain point in recruitment?", options: ["Sourcing", "Screening", "Interview scheduling"] },
-    { id: 2, text: "How do you handle employee inquiries?", options: ["Manual (Email/Slack)", "Basic FAQ", "Internal Portal"] },
-    { id: 3, text: "Is your onboarding documented?", options: ["Fully digital", "Mostly paper/manual", "Not documented"] },
-    { id: 4, text: "Time spent on routine admin tasks per week?", options: [">15 hours", "5-10 hours", "<5 hours"] },
-    { id: 5, text: "Current ATS (Applicant Tracking System) usage?", options: ["Advanced", "Basic", "No ATS"] },
+    {
+      id: 'hr_pain',
+      icon: '😫',
+      text: 'Manual Workload',
+      hint: 'Which HR task consumes most of your time?',
+      options: ['Screening Resumes', 'Employee FAQ/Support', 'Onboarding/Offboarding']
+    },
+    {
+      id: 'hr_goal',
+      icon: '📈',
+      text: 'Team Health',
+      hint: 'What is the current burnout risk level in your team?',
+      options: ['High (Critical)', 'Moderate', 'Low (Stable)']
+    }
+  ],
+  cto: [
+    {
+      id: 'cto_pain',
+      icon: '⚙️',
+      text: 'Technical Debt',
+      hint: 'What is the main issue with your current data architecture?',
+      options: ['Data Silos', 'Low Data Quality', 'Security/Privacy Risks']
+    },
+    {
+      id: 'cto_goal',
+      icon: '🔧',
+      text: 'Infrastructure',
+      hint: 'How ready is your stack for AI API integrations?',
+      options: ['Not Ready (No API access)', 'Partially Ready', 'Full API Readiness']
+    }
   ],
   lead: [
-    { id: 1, text: "Main sprint delay factor?", options: ["Vague requirements", "Manual testing", "Too many meetings"] },
-    { id: 2, text: "Code documentation level?", options: ["Automated/Detailed", "Manual/Brief", "Non-existent"] },
-    { id: 3, text: "Are you using AI for code/tasks?", options: ["Daily", "Occasionally", "Never"] },
-    { id: 4, text: "Technical debt status?", options: ["Under control", "Growing fast", "Critical"] },
-    { id: 5, text: "Team size?", options: ["1-5", "6-15", "15+"] },
+    {
+      id: 'lead_pain',
+      icon: '📅',
+      text: 'Management Debt',
+      hint: 'What hinders your daily team coordination?',
+      options: ['Manual Status Updates', 'Communication Gaps', 'Resource Planning']
+    },
+    {
+      id: 'lead_goal',
+      icon: '⚡',
+      text: 'Efficiency Goal',
+      hint: 'Where do you want to see the most AI impact?',
+      options: ['Meeting Automation', 'Task Prioritization', 'Documentation']
+    }
   ]
-}
+};
