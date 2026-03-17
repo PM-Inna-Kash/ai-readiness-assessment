@@ -17,7 +17,33 @@ export const metadata: Metadata = {
   title: "AI Readiness Assessment | Inna Kashtanova",
   description: "High-impact AI roadmap for the Canadian & Global market in 2 minutes.",
   
-  // Favicon and Icon configuration from RealFaviconGenerator
+  // OpenGraph Metadata (Used by Telegram, LinkedIn, WhatsApp, etc.)
+  openGraph: {
+    title: "AI Readiness Assessment | Inna Kashtanova",
+    description: "High-impact AI roadmap for the Canadian & Global market.",
+    url: "https://ai-readiness-assessment-pi.vercel.app/",
+    siteName: "Inna Kashtanova AI",
+    images: [
+      {
+        url: "/opengraph-image.png", // Ensure your lighthouse image is named exactly this in the /public folder
+        width: 1200,
+        height: 630,
+        alt: "AI Readiness Assessment Lighthouse",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  // Twitter/X Metadata
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Readiness Assessment | Inna Kashtanova",
+    description: "Evaluate your organizational AI maturity in 2 minutes.",
+    images: ["/opengraph-image.png"],
+  },
+
+  // Favicon and Icon configuration
   icons: {
     icon: [
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
