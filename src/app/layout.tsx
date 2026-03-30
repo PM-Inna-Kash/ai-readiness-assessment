@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +12,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Professional Metadata for the AI Readiness Assessment project
-// Professional Metadata for the AI Readiness Assessment project
 export const metadata: Metadata = {
   title: "AI Readiness Assessment | Inna Kashtanova",
   description: "Evaluate your organization's AI maturity and get a high-impact roadmap in 2 minutes. Managed by Inna Kashtanova.",
@@ -50,12 +47,7 @@ export const metadata: Metadata = {
   },
   
   manifest: "/site.webmanifest",
-};
   
-  // Web Manifest for Android/PWA support
-  manifest: "/site.webmanifest",
-  
-  // iOS specific settings
   appleWebApp: {
     title: "AI Assessment",
     statusBarStyle: "default",
@@ -74,7 +66,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <Analytics />
       </body>
     </html>
   );
