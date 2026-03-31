@@ -18,6 +18,10 @@ To deliver this tool within a single weekend, I applied a **"Bias toward Shippin
 * **Scalable Foundation**: Chose Next.js and Supabase to ensure the tool isn't just a demo, but a production-ready base for enterprise features.
 
 ### 🛠 Technical Architecture
+### 📸 Interface Preview
+<p align="center">
+  <img src="assets/app-screenshot.png" alt="App Screenshot" width="90%">
+</p>
 I managed the full delivery cycle of this MVP to demonstrate a modern, scalable stack:
 - **Framework:** [Next.js](https://nextjs.org/) (App Router)
 - **Intelligence:** [Google Gemini 3 Flash](https://deepmind.google/technologies/gemini/) (Prompt Engineering & Logic)
