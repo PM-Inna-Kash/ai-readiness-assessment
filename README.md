@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="assets/hero-banner.jpg" alt="AI Readiness Assessment Banner" width="100%">
+</p>
 # 🚀 AI Readiness Assessment Tool
 
 **Bridging the gap between AI hype and operational reality.**
