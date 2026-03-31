@@ -39,10 +39,16 @@ I managed the full delivery cycle of this MVP to demonstrate a modern, scalable 
 ### 👩‍💻 About Me
 I am a **Fractional Product & AI Lead** based in Canada. I specialize in paying off "Management Debt" by replacing late-night heroism with predictable systems. My focus is on technical delivery where AI meets operations—ensuring that technology solves business problems instead of creating new ones.
 
-**Let's Connect:**
-* **LinkedIn**: [linkedin.com/in/pminnaka](https://www.linkedin.com/in/pminnaka/)
-* **Portfolio**: [inna-kashtanova.com](https://inna-kashtanova.com)
-* **Goal**: Delivering high-impact AI projects with a focus on implementation and operational excellence.
+---
+
+### 🤝 Let's Connect
+Looking for a **Fractional Product Lead** to validate your AI hypothesis or streamline delivery? 
+
+* **📅 Book a Call**: [Schedule a 30-min Strategy Session](https://calendar.app.google/uYpMS3rU2zj5Rews5)
+* **✉️ Email**: [hello@inna-kashtanova.com](mailto:hello@inna-kashtanova.com)
+* **🔗 LinkedIn**: [pminnaka](https://www.linkedin.com/in/pminnaka/)
+
+*"Helping you turn AI complexity into operational clarity."*
 
 ---
 *PM Inna Kashtanova | 2026*
