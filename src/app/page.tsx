@@ -190,26 +190,69 @@ export default function Home() {
         )}
 
         {/* Step 1: Business Context */}
-        {step === 1 && (
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold mb-6 text-center">Business Context</h2>
-            <input type="text" placeholder="Full Name *" className="w-full p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, name: e.target.value})} />
-            <input type="email" placeholder="Business Email *" className="w-full p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, email: e.target.value})} />
-            <input type="text" placeholder="Company Name *" className="w-full p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, companyName: e.target.value})} />
-            <input type="text" placeholder="Industry (e.g. Retail, SaaS) *" className="w-full p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, industry: e.target.value})} />
-            <div className="flex gap-2">
-              <select className="flex-1 p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, companySize: e.target.value})}>
-                {companySizes.map(size => <option key={size} value={size}>{size} employees</option>)}
-              </select>
-              <select className="flex-1 p-4 bg-gray-50 rounded-xl outline-none" onChange={e => setBizInfo({...bizInfo, market: e.target.value})}>
-                <option>Canada</option><option>USA</option><option>Europe</option><option>Global</option>
-              </select>
-            </div>
-            <button onClick={() => setStep(2)} disabled={!isFormValid} className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black disabled:bg-gray-200 mt-4 transition-all">
-              Next Step
-            </button>
-          </div>
-        )}
+{step === 1 && (
+  <div className="space-y-4">
+    <h2 className="text-xl font-bold mb-2 text-center">Business Context</h2>
+    
+    {/* Note for Demo */}
+    <p className="text-xs text-gray-400 text-center italic mb-6">
+      Note: This is a demo. Feel free to use <span className="text-blue-500 font-medium">test@test.com</span> and any name to explore the tool.
+    </p>
+
+    <input 
+      type="text" 
+      placeholder="Full Name *" 
+      className="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-1 focus:ring-blue-500" 
+      onChange={e => setBizInfo({...bizInfo, name: e.target.value})} 
+    />
+    <input 
+      type="email" 
+      placeholder="Business Email *" 
+      className="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-1 focus:ring-blue-500" 
+      onChange={e => setBizInfo({...bizInfo, email: e.target.value})} 
+    />
+    <input 
+      type="text" 
+      placeholder="Company Name *" 
+      className="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-1 focus:ring-blue-500" 
+      onChange={e => setBizInfo({...bizInfo, companyName: e.target.value})} 
+    />
+    <input 
+      type="text" 
+      placeholder="Industry (e.g. Retail, SaaS) *" 
+      className="w-full p-4 bg-gray-50 rounded-xl outline-none focus:ring-1 focus:ring-blue-500" 
+      onChange={e => setBizInfo({...bizInfo, industry: e.target.value})} 
+    />
+    
+    <div className="flex gap-2">
+      <select 
+        className="flex-1 p-4 bg-gray-50 rounded-xl outline-none" 
+        onChange={e => setBizInfo({...bizInfo, companySize: e.target.value})}
+      >
+        {companySizes.map(size => (
+          <option key={size} value={size}>{size} employees</option>
+        ))}
+      </select>
+      <select 
+        className="flex-1 p-4 bg-gray-50 rounded-xl outline-none" 
+        onChange={e => setBizInfo({...bizInfo, market: e.target.value})}
+      >
+        <option>Canada</option>
+        <option>USA</option>
+        <option>Europe</option>
+        <option>Global</option>
+      </select>
+    </div>
+
+    <button 
+      onClick={() => setStep(2)} 
+      disabled={!isFormValid} 
+      className="w-full py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-black disabled:bg-gray-200 mt-4 transition-all"
+    >
+      Next Step
+    </button>
+  </div>
+)}
 
         {/* Step 2: Role Selection */}
         {step === 2 && (
